@@ -1,0 +1,8 @@
+prefix=/home/xcy/WorkSpace/src/nursing_robot/nursing_driver/cmake-build-debug/devel
+
+Name: nursing_driver
+Description: Description of nursing_driver
+Version: 0.0.0
+Cflags: -I/home/xcy/WorkSpace/src/nursing_robot/nursing_driver/include
+Libs: -L/home/xcy/WorkSpace/src/nursing_robot/nursing_driver/cmake-build-debug/devel/lib 
+Requires: sensor_msgs roscpp std_msgs

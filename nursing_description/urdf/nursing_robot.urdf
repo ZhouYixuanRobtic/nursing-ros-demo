@@ -1,0 +1,1875 @@
+<robot
+  name="nursing_robot">
+ 
+  <link name="world"/>
+ 
+  <joint
+        name="base_connected2_world"
+        type="fixed">
+        <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+        <parent
+        link="world" />
+        <child
+        link="base_Link" />
+  </joint>
+
+  <link
+    name="base_Link">
+    <inertial>
+      <origin
+        xyz="0.000975116535704247 -5.24080019366343E-16 0.653724872071743"
+        rpy="0 0 0" />
+      <mass
+        value="13.1342209172534" />
+      <inertia
+        ixx="1.79837128310824"
+        ixy="3.33392168039293E-18"
+        ixz="0.00832128372767534"
+        iyy="1.73981545954472"
+        iyz="-4.02455846426619E-15"
+        izz="0.121238103130393" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <link
+    name="shoulder_Link">
+    <inertial>
+      <origin
+        xyz="-1.10770721484244E-08 -0.0126123963344358 0.00316621571354569"
+        rpy="0 0 0" />
+      <mass
+        value="2.0005761085265" />
+      <inertia
+        ixx="0.00340242764902868"
+        ixy="-2.47585028952477E-10"
+        ixz="-4.78792550528614E-10"
+        iyy="0.00213435518597974"
+        iyz="-7.92332889559266E-05"
+        izz="0.00314052250895575" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/shoulder_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/shoulder_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="shoulder_Joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.22916 1.029"
+      rpy="3.1416 1.2217 -1.5708" />
+    <parent
+      link="base_Link" />
+    <child
+      link="shoulder_Link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="120"
+      velocity="6" />
+    <dynamics
+      damping="2"
+      friction="0.3" />
+  </joint>
+
+  <link
+    name="bigarm_Link">
+    <inertial>
+      <origin
+        xyz="-9.3721702620897E-10 0.0942612985078085 -0.00683177829272414"
+        rpy="0 0 0" />
+      <mass
+        value="1.3084597452699" />
+      <inertia
+        ixx="0.00242417981202897"
+        ixy="2.47990218963625E-10"
+        ixz="-8.73582284894497E-11"
+        iyy="0.00123264296704978"
+        iyz="-0.000442491903562605"
+        izz="0.0022350526637949" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/bigarm_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/bigarm_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="bigarm_Joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="1.5708 1.2217 1.4884E-16" />
+    <parent
+      link="shoulder_Link" />
+    <child
+      link="bigarm_Link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="120"
+      velocity="6" />
+    <dynamics
+      damping="2"
+      friction="0.3" />
+  </joint>
+
+  <link
+    name="elbow_Link">
+    <inertial>
+      <origin
+        xyz="-8.91997043322197E-08 -0.00958056604066806 0.00550381000541089"
+        rpy="0 0 0" />
+      <mass
+        value="1.18537012149853" />
+      <inertia
+        ixx="0.00154695052001683"
+        ixy="-6.22143055836505E-10"
+        ixz="-3.33603505356145E-09"
+        iyy="0.000898816208241872"
+        iyz="-6.2262995562934E-05"
+        izz="0.00131163104230723" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/elbow_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/elbow_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="elbow_Joint"
+    type="revolute">
+    <origin
+      xyz="0 0.213 0"
+      rpy="1.5708 -1.5708 0" />
+    <parent
+      link="bigarm_Link" />
+    <child
+      link="elbow_Link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="60"
+      velocity="6" />
+    <dynamics
+      damping="2"
+      friction="0.3" />
+  </joint>
+
+  <link
+    name="forearm_Link">
+    <inertial>
+      <origin
+        xyz="2.24516415571224E-10 0.0885418372252827 -0.00303339081772486"
+        rpy="0 0 0" />
+      <mass
+        value="1.18315193630833" />
+      <inertia
+        ixx="0.00167556758311703"
+        ixy="-2.52012583202254E-12"
+        ixz="5.61444410618564E-12"
+        iyy="0.000885550233169105"
+        iyz="-0.00016786378820563"
+        izz="0.00157093160340839" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/forearm_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/forearm_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="forearm_Joint"
+    type="revolute">
+    <origin
+      xyz="0 0 0"
+      rpy="-1.5708 0 3.1416" />
+    <parent
+      link="elbow_Link" />
+    <child
+      link="forearm_Link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="60"
+      velocity="6" />
+    <dynamics
+      damping="2"
+      friction="0.3" />
+  </joint>
+
+  <link
+    name="wrist_Link">
+    <inertial>
+      <origin
+        xyz="5.37717210896682E-07 -0.00317030985847225 0.00829753983993398"
+        rpy="0 0 0" />
+      <mass
+        value="0.523525347931366" />
+      <inertia
+        ixx="0.000448235209138222"
+        ixy="5.17833271363148E-09"
+        ixz="1.31122834779533E-09"
+        iyy="0.000375957230561681"
+        iyz="-1.96584749734734E-05"
+        izz="0.000312721910908243" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/wrist_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/wrist_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="wrist_Joint"
+    type="revolute">
+    <origin
+      xyz="0 0.211 0"
+      rpy="1.5708 -1.5708 0" />
+    <parent
+      link="forearm_Link" />
+    <child
+      link="wrist_Link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="60"
+      velocity="6" />
+    <dynamics
+      damping="2"
+      friction="0.3" />
+  </joint>
+
+  <link
+    name="wrist_palm_Link">
+    <inertial>
+      <origin
+        xyz="-2.77555756156289E-17 0.0212635124433856 0.00362088321038934"
+        rpy="0 0 0" />
+      <mass
+        value="0.0785897078168313" />
+      <inertia
+        ixx="0.000105638187462249"
+        ixy="-2.39957216855404E-20"
+        ixz="-6.06530484064865E-21"
+        iyy="8.02353574061376E-05"
+        iyz="-2.01750373326787E-07"
+        izz="3.78719966391509E-05" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/wrist_palm_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/wrist_palm_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="wrist_palm_Joint"
+    type="revolute">
+    <origin
+      xyz="0 -0.0005 0"
+      rpy="-1.5708 -4.1197E-17 -3.1416" />
+    <parent
+      link="wrist_Link" />
+    <child
+      link="wrist_palm_Link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="30"
+      velocity="6" />
+    <dynamics
+      damping="2"
+      friction="0.3" />
+  </joint>
+  <link name="tool_Link"/>
+
+  <joint
+    name="tool_mount_Joint"
+    type="fixed">
+    <origin
+      xyz="0 0.045 0"
+      rpy="-4.7783E-19 -4.2367E-17 -9.2245E-20" />
+    <parent
+      link="wrist_palm_Link" />
+    <child
+      link="tool_Link" />
+  </joint>
+  
+  <link
+    name="palm_Link">
+    <inertial>
+      <origin
+        xyz="-0.000858917467673748 0.0783018654779908 -0.000685339950457218"
+        rpy="0 0 0" />
+      <mass
+        value="0.185255775815419" />
+      <inertia
+        ixx="0.000201199253090397"
+        ixy="3.66744909869903E-06"
+        ixz="-2.66736820132481E-06"
+        iyy="0.000122776533201212"
+        iyz="2.85253552275154E-06"
+        izz="0.00011848560937483" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/palm_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/palm_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="tool_mount_Joint2"
+    type="fixed">
+    <origin
+      xyz="0 -0.045 0"
+      rpy="-4.7783E-19 -4.2367E-17 -9.2245E-20" />
+    <parent
+      link="tool_Link" />
+    <child
+      link="palm_Link" />
+  </joint>
+
+  <link
+    name="thumb_root_Link">
+    <inertial>
+      <origin
+        xyz="0.0125818962606528 -4.87799550893953E-05 -0.000801264271478086"
+        rpy="0 0 0" />
+      <mass
+        value="0.00873863966494842" />
+      <inertia
+        ixx="4.78618606797515E-07"
+        ixy="4.67506565969486E-09"
+        ixz="6.50786986041919E-08"
+        iyy="6.59226240926663E-07"
+        iyz="-2.42881192046454E-09"
+        izz="7.73142386256592E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/thumb_root_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/thumb_root_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="thumb_root_Joint"
+    type="revolute">
+    <origin
+      xyz="0.008 0.059 -0.0245"
+      rpy="-1.5708 1.8288E-16 -3.4659E-16" />
+    <parent
+      link="palm_Link" />
+    <child
+      link="thumb_root_Link" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="1"
+      velocity="3" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="thumb_pulp_Link">
+    <inertial>
+      <origin
+        xyz="0.027449995981349 -0.000752092685807448 8.2502130787053E-06"
+        rpy="0 0 0" />
+      <mass
+        value="0.0341453180652159" />
+      <inertia
+        ixx="1.62379136177592E-06"
+        ixy="-1.99115121352193E-07"
+        ixz="7.70421455920083E-09"
+        iyy="7.56851305166079E-06"
+        iyz="-2.12966638961326E-10"
+        izz="7.30923754370069E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/thumb_pulp_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/thumb_pulp_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="thumb_pulp_Joint"
+    type="revolute">
+    <origin
+      xyz="0.0215 0 0"
+      rpy="-1.5707 -1.5708 0" />
+    <parent
+      link="thumb_root_Link" />
+    <child
+      link="thumb_pulp_Link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="0.5"
+      velocity="3" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="thumb_tip_Link">
+    <inertial>
+      <origin
+        xyz="-0.0152691862985479 0.0072465218121634 2.09723793173078E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.013992456954275" />
+      <inertia
+        ixx="8.66964655825818E-07"
+        ixy="3.92842326251715E-07"
+        ixz="-4.49412174540461E-09"
+        iyy="1.39449488012268E-06"
+        iyz="2.13608665298848E-09"
+        izz="1.4425188628725E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/thumb_tip_Link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/thumb_tip_Link.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="thumb_tip_Joint"
+    type="revolute">
+    <origin
+      xyz="0.053 0 0"
+      rpy="-1.5707 3.14159 1.5707" />
+    <parent
+      link="thumb_pulp_Link" />
+    <child
+      link="thumb_tip_Link" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="0.5"
+      velocity="3" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="finger_root_Link1">
+    <inertial>
+      <origin
+        xyz="0.00085421358266341 0.0179894317640127 4.90932063612615E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.00998735644770016" />
+      <inertia
+        ixx="1.62809417646463E-06"
+        ixy="1.1020761906609E-07"
+        ixz="-4.39577614689512E-12"
+        iyy="6.08730286509201E-07"
+        iyz="5.7526352716471E-13"
+        izz="1.53692392596848E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_root_Link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_root_Link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="finger_root_Joint1"
+    type="revolute">
+    <origin
+      xyz="-0.006 0.12897 -0.030784"
+      rpy="-0.087266 3.8885E-16 -9.7966E-17" />
+    <parent
+      link="palm_Link" />
+    <child
+      link="finger_root_Link1" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="1"
+      velocity="6" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="finger_pulp_Link1">
+    <inertial>
+      <origin
+        xyz="0.000323041387879197 0.0155892015854537 8.49032423644314E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.00868632679939799" />
+      <inertia
+        ixx="1.14779480878089E-06"
+        ixy="7.75788539608331E-08"
+        ixz="3.94437985959936E-11"
+        iyy="5.07653574731615E-07"
+        iyz="1.03932782776036E-10"
+        izz="1.03364601842098E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_pulp_Link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_pulp_Link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="finger_pulp_Joint1"
+    type="revolute">
+    <origin
+      xyz="0 0.033 0"
+      rpy="1.0686E-15 -1.6181E-17 3.2315E-16" />
+    <parent
+      link="finger_root_Link1" />
+    <child
+      link="finger_pulp_Link1" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="0.5"
+      velocity="3" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="finger_tip_Link1">
+    <inertial>
+      <origin
+        xyz="0.00148025519930298 0.0131304666536947 2.77465185490322E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.0106102845095467" />
+      <inertia
+        ixx="8.33617935098718E-07"
+        ixy="-6.54450353100635E-08"
+        ixz="4.3263337484433E-10"
+        iyy="5.07253023124455E-07"
+        iyz="3.86570286955424E-09"
+        izz="7.4683637887455E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_tip_Link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_tip_Link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="finger_tip_Joint1"
+    type="revolute">
+    <origin
+      xyz="0 0.028 0"
+      rpy="-4.3021E-16 -5.8465E-16 -7.6495E-16" />
+    <parent
+      link="finger_pulp_Link1" />
+    <child
+      link="finger_tip_Link1" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="0.5"
+      velocity="3" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="finger_root_Link2">
+    <inertial>
+      <origin
+        xyz="0.000854209403321843 0.017989434507023 4.51930543318019E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.00998735107929643" />
+      <inertia
+        ixx="1.62809409863191E-06"
+        ixy="1.10207023652924E-07"
+        ixz="-4.35047632176436E-12"
+        iyy="6.08730243149985E-07"
+        iyz="7.25655903585178E-13"
+        izz="1.53692348120912E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_root_Link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_root_Link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="finger_root_Joint2"
+    type="revolute">
+    <origin
+      xyz="-0.006 0.134 -0.01"
+      rpy="7.0377E-16 4.4735E-16 4.7878E-16" />
+    <parent
+      link="palm_Link" />
+    <child
+      link="finger_root_Link2" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="1"
+      velocity="6" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="finger_pulp_Link2">
+    <inertial>
+      <origin
+        xyz="0.000323032946156931 0.0155892046967881 8.5182315229422E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.00868631420920856" />
+      <inertia
+        ixx="1.14779416686536E-06"
+        ixy="7.75786511115928E-08"
+        ixz="3.92446550182023E-11"
+        iyy="5.07652686877478E-07"
+        iyz="1.03881261463607E-10"
+        izz="1.03364543876975E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_pulp_Link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_pulp_Link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="finger_pulp_Joint2"
+    type="revolute">
+    <origin
+      xyz="0 0.033 0"
+      rpy="9.0577E-16 -6.008E-16 -5.9674E-16" />
+    <parent
+      link="finger_root_Link2" />
+    <child
+      link="finger_pulp_Link2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="0.5"
+      velocity="3" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="finger_tip_Link2">
+    <inertial>
+      <origin
+        xyz="0.00148025358833312 0.0131304692738635 2.77421047547525E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.0106102830262735" />
+      <inertia
+        ixx="8.33618125744598E-07"
+        ixy="-6.54448503304505E-08"
+        ixz="4.3268366444515E-10"
+        iyy="5.07252849252122E-07"
+        iyz="3.86592513273236E-09"
+        izz="7.46836423409837E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_tip_Link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_tip_Link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="finger_tip_Joint2"
+    type="revolute">
+    <origin
+      xyz="0 0.028 0"
+      rpy="-2.1837E-16 -3.6714E-16 7.6328E-17" />
+    <parent
+      link="finger_pulp_Link2" />
+    <child
+      link="finger_tip_Link2" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="0.5"
+      velocity="3" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="finger_root__Link3">
+    <inertial>
+      <origin
+        xyz="0.000854216158261562 0.0179894301933772 4.5116595868977E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.00998736281169698" />
+      <inertia
+        ixx="1.62809466763915E-06"
+        ixy="1.10207637026019E-07"
+        ixz="-4.59350016183217E-12"
+        iyy="6.08731021353847E-07"
+        iyz="9.86877235574565E-13"
+        izz="1.53692422034934E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_root__Link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_root__Link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="finger_root_Joint3"
+    type="revolute">
+    <origin
+      xyz="-0.006 0.12897 0.010784"
+      rpy="0.087266 2.4291E-16 3.8913E-16" />
+    <parent
+      link="palm_Link" />
+    <child
+      link="finger_root__Link3" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="1"
+      velocity="6" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="finger_pulp_Link3">
+    <inertial>
+      <origin
+        xyz="0.000323040451644913 0.0155892002842233 8.53525906306662E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.00868632383973415" />
+      <inertia
+        ixx="1.14779455901612E-06"
+        ixy="7.75789409004714E-08"
+        ixz="3.90694121496773E-11"
+        iyy="5.07653198288308E-07"
+        iyz="1.03968358082949E-10"
+        izz="1.03364623913664E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_pulp_Link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_pulp_Link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="finger_pulp_Joint3"
+    type="revolute">
+    <origin
+      xyz="0 0.033 0"
+      rpy="1.2212E-15 2.5285E-16 -4.7876E-16" />
+    <parent
+      link="finger_root__Link3" />
+    <child
+      link="finger_pulp_Link3" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="0.5"
+      velocity="3" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="finger_tip_Link3">
+    <inertial>
+      <origin
+        xyz="0.00148025124885523 0.0131304687491611 2.77366166634846E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.0106102772879917" />
+      <inertia
+        ixx="8.33617820044E-07"
+        ixy="-6.54451256341447E-08"
+        ixz="4.32743985174503E-10"
+        iyy="5.07252714479879E-07"
+        iyz="3.86619676388197E-09"
+        izz="7.46836062326113E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_tip_Link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_tip_Link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="finger_tip_Joint3"
+    type="revolute">
+    <origin
+      xyz="0 0.028 0"
+      rpy="9.8532E-16 -1.195E-16 8.7053E-16" />
+    <parent
+      link="finger_pulp_Link3" />
+    <child
+      link="finger_tip_Link3" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="0.5"
+      velocity="3" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="finger_root__Link4">
+    <inertial>
+      <origin
+        xyz="0.000854214380922175 0.0179894314736897 4.12605557498225E-08"
+        rpy="0 0 0" />
+      <mass
+        value="0.00998736123193078" />
+      <inertia
+        ixx="1.62809469493317E-06"
+        ixy="1.10208035100687E-07"
+        ixz="-4.57529512154134E-12"
+        iyy="6.08730990128511E-07"
+        iyz="1.05000463533208E-12"
+        izz="1.53692395398855E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_root__Link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_root__Link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="finger_root_Joint4"
+    type="revolute">
+    <origin
+      xyz="-0.006 0.12386 0.031563"
+      rpy="0.17453 -9.9426E-16 -2.4912E-16" />
+    <parent
+      link="palm_Link" />
+    <child
+      link="finger_root__Link4" />
+    <axis
+      xyz="0 0 -1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="1"
+      velocity="6" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="finger_pulp_Link4">
+    <inertial>
+      <origin
+        xyz="0.000323035621993095 0.0155892041303389 8.5559988254047E-07"
+        rpy="0 0 0" />
+      <mass
+        value="0.00868631578597844" />
+      <inertia
+        ixx="1.14779397697803E-06"
+        ixy="7.75788086698591E-08"
+        ixz="3.88955819443451E-11"
+        iyy="5.07652706334165E-07"
+        iyz="1.0413128618827E-10"
+        izz="1.03364569528293E-06" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_pulp_Link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_pulp_Link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="finger_pulp_Joint4"
+    type="revolute">
+    <origin
+      xyz="0 0.033 0"
+      rpy="1.4155E-15 4.972E-16 -3.1323E-16" />
+    <parent
+      link="finger_root__Link4" />
+    <child
+      link="finger_pulp_Link4" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="0.5"
+      velocity="3" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link
+    name="finger_tip_Link4">
+    <inertial>
+      <origin
+        xyz="0.0014802533327806 0.0131304688781141 2.77323028520654E-05"
+        rpy="0 0 0" />
+      <mass
+        value="0.010610279402941" />
+      <inertia
+        ixx="8.33617666276094E-07"
+        ixy="-6.54453387989592E-08"
+        ixz="4.32652410334316E-10"
+        iyy="5.07252941570464E-07"
+        iyz="3.86652617126035E-09"
+        izz="7.46836088838055E-07" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_tip_Link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.866666666666667 0.866666666666667 0.890196078431373 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://nursing_description/meshes/finger_tip_Link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+
+  <joint
+    name="finger_tip_Joint4"
+    type="revolute">
+    <origin
+      xyz="0 0.028 0"
+      rpy="6.3838E-16 -4.8265E-16 1.2541E-15" />
+    <parent
+      link="finger_pulp_Link4" />
+    <child
+      link="finger_tip_Link4" />
+    <axis
+      xyz="0 0 1" />
+    <limit
+      lower="-3.1415"
+      upper="3.1415"
+      effort="0.5"
+      velocity="3" />
+    <dynamics
+      damping="0.1"
+      friction="0.1" />
+  </joint>
+
+  <link name="index_ee_Link"/>
+  
+  <joint
+    name="index_ee_joint"
+    type="fixed">
+    <origin
+      xyz="0.006 0.028 0"
+      rpy="0.0 0.0 0.0" />
+    <parent
+      link="finger_tip_Link1" />
+    <child
+      link="index_ee_Link" />
+  </joint>
+
+  <link name="middle_ee_Link"/>
+  
+  <joint
+    name="middle_ee_joint"
+    type="fixed">
+    <origin
+      xyz="0.006 0.028 0"
+      rpy="0.0 0.0 0.0" />
+    <parent
+      link="finger_tip_Link2" />
+    <child
+      link="middle_ee_Link" />
+  </joint>
+
+  <link name="ring_ee_Link"/>
+  
+  <joint
+    name="ring_ee_joint"
+    type="fixed">
+    <origin
+      xyz="0.006 0.028 0"
+      rpy="0.0 0.0 0.0" />
+    <parent
+      link="finger_tip_Link3" />
+    <child
+      link="ring_ee_Link" />
+  </joint>
+
+  <link name="pingky_ee_Link"/>
+
+  <joint
+    name="pingky_ee_joint"
+    type="fixed">
+    <origin
+      xyz="0.006 0.028 0"
+      rpy="0.0 0.0 0.0" />
+    <parent
+      link="finger_tip_Link4" />
+    <child
+      link="pingky_ee_Link" />
+  </joint>
+
+  <link name="thumb_ee_Link"/>
+
+  <joint
+    name="thumb_ee_joint"
+    type="fixed">
+    <origin
+      xyz="0.0065 0.0 -0.0365"
+      rpy="0.0 0.0 0.0" />
+    <parent
+      link="thumb_tip_Link" />
+    <child
+      link="thumb_ee_Link" />
+  </joint>
+<!-- Gazebo plugin -->
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+        <robotNamespace>/nursing_robot</robotNamespace>
+        <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+        <legacyModeNS>true</legacyModeNS>
+        </plugin>
+    </gazebo>
+<!--Transmission-->
+
+<!--arm-->
+    <transmission name="shoulder_Joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="shoulder_Joint">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="shoulder_Joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="bigarm_Joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="bigarm_Joint">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="bigarm_Joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+   <transmission name="elbow_Joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="elbow_Joint">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="elbow_Joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+   <transmission name="forearm_Joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="forearm_Joint">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="forearm_Joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="wrist_Joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="wrist_Joint">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="wrist_Joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+   <transmission name="wrist_palm_Joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="wrist_palm_Joint">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="wrist_palm_Joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+    <transmission name="thumb_root_Joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="thumb_root_Joint">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="thumb_root_Joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+     <transmission name="thumb_pulp_Joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="thumb_pulp_Joint">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="thumb_pulp_Joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+    
+     <transmission name="thumb_tip_Joint_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="thumb_tip_Joint">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="thumb_tip_Joint_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+     <transmission name="finger_root_Joint1_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger_root_Joint1">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="finger_root_Joint1_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="finger_pulp_Joint1_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger_pulp_Joint1">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="finger_pulp_Joint1_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+     <transmission name="finger_tip_Joint1_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger_tip_Joint1">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="finger_tip_Joint1_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="finger_root_Joint2_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger_root_Joint2">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="finger_root_Joint2_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="finger_pulp_Joint2_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger_pulp_Joint2">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="finger_pulp_Joint2_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+     <transmission name="finger_tip_Joint2_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger_tip_Joint2">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="finger_tip_Joint2_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="finger_root_Joint3_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger_root_Joint3">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="finger_root_Joint3_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="finger_pulp_Joint3_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger_pulp_Joint3">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="finger_pulp_Joint3_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+     <transmission name="finger_tip_Joint3_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger_tip_Joint3">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="finger_tip_Joint3_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="finger_root_Joint4_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger_root_Joint4">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="finger_root_Joint4_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <transmission name="finger_pulp_Joint4_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger_pulp_Joint4">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="finger_pulp_Joint4_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+     <transmission name="finger_tip_Joint4_trans">
+      <type>transmission_interface/SimpleTransmission</type>
+      <joint name="finger_tip_Joint4">        					          		  
+        <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+      </joint>
+      <actuator name="finger_tip_Joint4_motor">
+        <mechanicalReduction>1</mechanicalReduction>
+      </actuator>
+    </transmission>
+
+    <gazebo reference="base_Link">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="shoulder_Link">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="bigarm_Link">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="elbow_Link">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="forearm_Link">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="wrist_Link">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/White</material>
+    </gazebo>
+    <gazebo reference="wrist_palm_Link">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/White</material>
+    </gazebo>
+
+    <gazebo reference="palm_Link">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo reference="thumb_root_Link">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo reference="thumb_pulp_Link">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo reference="thumb_tip_Link">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+    
+    <gazebo reference="finger_root_Link1">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+   <gazebo reference="finger_root_Link2">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo reference="finger_root__Link3">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+   <gazebo reference="finger_root__Link4">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+       <gazebo reference="finger_pulp_Link1">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+   <gazebo reference="finger_pulp_Link2">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo reference="finger_pulp_Link3">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+   <gazebo reference="finger_pulp_Link4">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo reference="finger_tip_Link1">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+   <gazebo reference="finger_tip_Link2">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+    <gazebo reference="finger_tip_Link3">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+
+   <gazebo reference="finger_tip_Link4">
+        <mu1>0.3</mu1>
+        <mu2>0.3</mu2>
+        <material>Gazebo/Grey</material>
+    </gazebo>
+    
+</robot>

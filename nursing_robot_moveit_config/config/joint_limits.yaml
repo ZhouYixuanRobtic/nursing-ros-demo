@@ -1,0 +1,109 @@
+# joint_limits.yaml allows the dynamics properties specified in the URDF to be overwritten or augmented as needed
+# Specific joint properties can be changed with the keys [max_position, min_position, max_velocity, max_acceleration]
+# Joint limits can be turned off with [has_velocity_limits, has_acceleration_limits]
+joint_limits:
+  bigarm_Joint:
+    has_velocity_limits: true
+    max_velocity: 6
+    has_acceleration_limits: false
+    max_acceleration: 0
+  elbow_Joint:
+    has_velocity_limits: true
+    max_velocity: 6
+    has_acceleration_limits: false
+    max_acceleration: 0
+  finger_pulp_Joint1:
+    has_velocity_limits: true
+    max_velocity: 3
+    has_acceleration_limits: false
+    max_acceleration: 0
+  finger_pulp_Joint2:
+    has_velocity_limits: true
+    max_velocity: 3
+    has_acceleration_limits: false
+    max_acceleration: 0
+  finger_pulp_Joint3:
+    has_velocity_limits: true
+    max_velocity: 3
+    has_acceleration_limits: false
+    max_acceleration: 0
+  finger_pulp_Joint4:
+    has_velocity_limits: true
+    max_velocity: 3
+    has_acceleration_limits: false
+    max_acceleration: 0
+  finger_root_Joint1:
+    has_velocity_limits: true
+    max_velocity: 6
+    has_acceleration_limits: false
+    max_acceleration: 0
+  finger_root_Joint2:
+    has_velocity_limits: true
+    max_velocity: 6
+    has_acceleration_limits: false
+    max_acceleration: 0
+  finger_root_Joint3:
+    has_velocity_limits: true
+    max_velocity: 6
+    has_acceleration_limits: false
+    max_acceleration: 0
+  finger_root_Joint4:
+    has_velocity_limits: true
+    max_velocity: 6
+    has_acceleration_limits: false
+    max_acceleration: 0
+  finger_tip_Joint1:
+    has_velocity_limits: true
+    max_velocity: 3
+    has_acceleration_limits: false
+    max_acceleration: 0
+  finger_tip_Joint2:
+    has_velocity_limits: true
+    max_velocity: 3
+    has_acceleration_limits: false
+    max_acceleration: 0
+  finger_tip_Joint3:
+    has_velocity_limits: true
+    max_velocity: 3
+    has_acceleration_limits: false
+    max_acceleration: 0
+  finger_tip_Joint4:
+    has_velocity_limits: true
+    max_velocity: 3
+    has_acceleration_limits: false
+    max_acceleration: 0
+  forearm_Joint:
+    has_velocity_limits: true
+    max_velocity: 6
+    has_acceleration_limits: false
+    max_acceleration: 0
+  shoulder_Joint:
+    has_velocity_limits: true
+    max_velocity: 6
+    has_acceleration_limits: false
+    max_acceleration: 0
+  thumb_pulp_Joint:
+    has_velocity_limits: true
+    max_velocity: 3
+    has_acceleration_limits: false
+    max_acceleration: 0
+  thumb_root_Joint:
+    has_velocity_limits: true
+    max_velocity: 3
+    has_acceleration_limits: false
+    max_acceleration: 0
+  thumb_tip_Joint:
+    has_velocity_limits: true
+    max_velocity: 3
+    has_acceleration_limits: false
+    max_acceleration: 0
+  wrist_Joint:
+    has_velocity_limits: true
+    max_velocity: 6
+    has_acceleration_limits: false
+    max_acceleration: 0
+  wrist_palm_Joint:
+    has_velocity_limits: true
+    max_velocity: 6
+    has_acceleration_limits: false
+    max_acceleration: 0

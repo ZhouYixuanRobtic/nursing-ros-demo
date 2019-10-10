@@ -1,0 +1,59 @@
+controller_manager_ns: ''
+controller_list:
+  - name: nursing_robot/nursing_arm_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+        - shoulder_Joint
+        - bigarm_Joint
+        - elbow_Joint
+        - forearm_Joint
+        - wrist_Joint
+        - wrist_palm_Joint
+
+  - name: nursing_robot/thumb_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+        - thumb_root_Joint
+        - thumb_pulp_Joint
+        - thumb_tip_Joint
+
+  - name: nursing_robot/index_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+        - finger_root_Joint1
+        - finger_pulp_Joint1
+        - finger_tip_Joint1
+
+  - name: nursing_robot/middle_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+        - finger_root_Joint2
+        - finger_pulp_Joint2
+        - finger_tip_Joint2
+
+  - name: nursing_robot/ring_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+        - finger_root_Joint3
+        - finger_pulp_Joint3
+        - finger_tip_Joint3
+
+  - name: nursing_robot/pingky_controller
+    action_ns: follow_joint_trajectory
+    type: FollowJointTrajectory
+    default: true
+    joints:
+        - finger_root_Joint4
+        - finger_pulp_Joint4
+        - finger_tip_Joint4
+

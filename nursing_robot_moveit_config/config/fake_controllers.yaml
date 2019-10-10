@@ -1,0 +1,92 @@
+controller_list:
+  - name: fake_nursing_robot_controller
+    joints:
+      - shoulder_Joint
+      - bigarm_Joint
+      - elbow_Joint
+      - forearm_Joint
+      - wrist_Joint
+      - wrist_palm_Joint
+      - finger_root_Joint1
+      - finger_pulp_Joint1
+      - finger_tip_Joint1
+      - finger_root_Joint2
+      - finger_pulp_Joint2
+      - finger_tip_Joint2
+      - finger_root_Joint3
+      - finger_pulp_Joint3
+      - finger_tip_Joint3
+      - finger_root_Joint4
+      - finger_pulp_Joint4
+      - finger_tip_Joint4
+      - thumb_root_Joint
+      - thumb_pulp_Joint
+      - thumb_tip_Joint
+  - name: fake_nursing_arm_controller
+    joints:
+      - shoulder_Joint
+      - bigarm_Joint
+      - elbow_Joint
+      - forearm_Joint
+      - wrist_Joint
+      - wrist_palm_Joint
+  - name: fake_index_group_controller
+    joints:
+      - finger_root_Joint1
+      - finger_pulp_Joint1
+      - finger_tip_Joint1
+  - name: fake_middle_group_controller
+    joints:
+      - finger_root_Joint2
+      - finger_pulp_Joint2
+      - finger_tip_Joint2
+  - name: fake_ring_group_controller
+    joints:
+      - finger_root_Joint3
+      - finger_pulp_Joint3
+      - finger_tip_Joint3
+  - name: fake_pingky_group_controller
+    joints:
+      - finger_root_Joint4
+      - finger_pulp_Joint4
+      - finger_tip_Joint4
+  - name: fake_thumb_group_controller
+    joints:
+      - thumb_root_Joint
+      - thumb_pulp_Joint
+      - thumb_tip_Joint
+  - name: fake_nursing_hand_controller
+    joints:
+      - finger_root_Joint1
+      - finger_pulp_Joint1
+      - finger_tip_Joint1
+      - finger_root_Joint2
+      - finger_pulp_Joint2
+      - finger_tip_Joint2
+      - finger_root_Joint3
+      - finger_pulp_Joint3
+      - finger_tip_Joint3
+      - finger_root_Joint4
+      - finger_pulp_Joint4
+      - finger_tip_Joint4
+      - thumb_root_Joint
+      - thumb_pulp_Joint
+      - thumb_tip_Joint
+  - name: fake_arm_ee_group_controller
+    joints:
+      []
+  - name: fake_index_ee_group_controller
+    joints:
+      []
+  - name: fake_middle_ee_group_controller
+    joints:
+      []
+  - name: fake_ring_ee_group_controller
+    joints:
+      []
+  - name: fake_pingky_ee_group_controller
+    joints:
+      []
+  - name: fake_thumb_ee_group_controller
+    joints:
+      []

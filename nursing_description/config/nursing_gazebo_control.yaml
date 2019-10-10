@@ -1,0 +1,141 @@
+nursing_robot:
+    #publish all joint states
+    joint_state_controller:
+        type: joint_state_controller/JointStateController
+        publish_rate: 50
+    nursing_arm_controller:
+        type: position_controllers/JointTrajectoryController
+        joints:
+            - shoulder_Joint
+            - bigarm_Joint
+            - elbow_Joint
+            - forearm_Joint
+            - wrist_Joint
+            - wrist_palm_Joint
+        
+        constraints:
+            goal_time: &goal_time_constraint 4.0
+            stopped_velocity_tolerance: 0.05
+            shoulder_Joint:
+                goal: &goal_pos_constraint 0.1
+                trajectory: &trajectory_pos_constraint 0.1
+            bigarm_Joint:
+                goal: *goal_pos_constraint
+                trajectory: *trajectory_pos_constraint
+            elbow_Joint:
+                goal: *goal_pos_constraint
+                trajectory: *trajectory_pos_constraint         
+            forearm_Joint:
+                goal: *goal_pos_constraint
+                trajectory: *trajectory_pos_constraint
+            wrist_Joint:
+                goal: *goal_pos_constraint
+                trajectory: *trajectory_pos_constraint
+            wrist_palm_Joint:
+                goal: *goal_pos_constraint
+                trajectory: *trajectory_pos_constraint   
+    
+    thumb_controller:
+        type: position_controllers/JointTrajectoryController
+        joints:
+            - thumb_root_Joint
+            - thumb_pulp_Joint
+            - thumb_tip_Joint
+        
+        constraints:
+            goal_time: *goal_time_constraint
+            stopped_velocity_tolerance: 0.05
+            thumb_root_Joint:
+                goal: 0.5
+                trajectory: 0.5
+            thumb_pulp_Joint:
+                goal: 0.5
+                trajectory: 0.5
+            thumb_pulp_Joint:
+                goal: 0.5
+                trajectory: 0.5
+               
+    index_controller:
+        type: position_controllers/JointTrajectoryController
+        joints:
+            - finger_root_Joint1
+            - finger_pulp_Joint1
+            - finger_tip_Joint1
+        
+        constraints:
+            goal_time: *goal_time_constraint 
+            stopped_velocity_tolerance: 0.05
+            finger_root_Joint1:
+                goal: *goal_pos_constraint
+                trajectory: *trajectory_pos_constraint 
+            finger_pulp_Joint1:
+                goal: *goal_pos_constraint
+                trajectory: *trajectory_pos_constraint
+            finger_pulp_Joint1:
+                goal: *goal_pos_constraint
+                trajectory: *trajectory_pos_constraint
+
+    middle_controller:
+            type: position_controllers/JointTrajectoryController
+            joints:
+                - finger_root_Joint2
+                - finger_pulp_Joint2
+                - finger_tip_Joint2
+            
+                    
+            constraints:
+                goal_time: *goal_time_constraint
+                stopped_velocity_tolerance: 0.05
+                finger_root_Joint2:
+                    goal: *goal_pos_constraint 
+                    trajectory: *trajectory_pos_constraint 
+                finger_pulp_Joint2:
+                    goal: *goal_pos_constraint
+                    trajectory: *trajectory_pos_constraint
+                finger_pulp_Joint2:
+                    goal: *goal_pos_constraint
+                    trajectory: *trajectory_pos_constraint
+    ring_controller:
+        type: position_controllers/JointTrajectoryController
+        joints:
+            - finger_root_Joint3
+            - finger_pulp_Joint3
+            - finger_tip_Joint3
+        
+        constraints:
+                goal_time: *goal_time_constraint 
+                stopped_velocity_tolerance: 0.05
+                finger_root_Joint3:
+                    goal: *goal_pos_constraint 
+                    trajectory: *trajectory_pos_constraint 
+                finger_pulp_Joint3:
+                    goal: *goal_pos_constraint
+                    trajectory: *trajectory_pos_constraint
+                finger_pulp_Joint3:
+                    goal: *goal_pos_constraint
+                    trajectory: *trajectory_pos_constraint  
+    
+    pingky_controller:
+        type: position_controllers/JointTrajectoryController
+        joints:
+            - finger_root_Joint4
+            - finger_pulp_Joint4
+            - finger_tip_Joint4
+        
+        constraints:
+                goal_time: *goal_time_constraint 
+                stopped_velocity_tolerance: 0.05
+                finger_root_Joint4:
+                    goal: *goal_pos_constraint 
+                    trajectory: *trajectory_pos_constraint 
+                finger_pulp_Joint4:
+                    goal: *goal_pos_constraint
+                    trajectory: *trajectory_pos_constraint
+                finger_pulp_Joint4:
+                    goal: *goal_pos_constraint
+                    trajectory: *trajectory_pos_constraint    
+               
+        
+    stop_trajectory_duration: 1.0
+    action_monitor_rate: 10
+
