@@ -8,6 +8,7 @@ namespace SocketCommunicator
         this->isReadRegistered=false;
         this->isInitialized=false;
         this->isReadRegistered=false;
+        this->receivedBool_=false;
         ps_= new nursing_namespace::PlanningState;
         memset(buffer_, 0, _BUFFER_SIZE_);
     }
@@ -96,7 +97,13 @@ namespace SocketCommunicator
             }
             else
             {
-                memcpy(ps_,buffer_, sizeof(nursing_namespace::PlanningState)+1);
+                if(receivedBytes_> sizeof(bool)+1)
+                    memcpy(ps_,buffer_, sizeof(nursing_namespace::PlanningState));
+                else
+                {
+                    receivedBool_ = static_cast<bool> (buffer_[receivedBytes_ - 1]);
+                    std::cout << "the received bool is" << receivedBool_ << std::endl;
+                }
             }
         }
         return true;
@@ -140,7 +147,7 @@ namespace SocketCommunicator
     {
         if(waitForConnection())
         {
-            registerClientReadThread(60);
+            registerClientReadThread(50);
             return true;
         }
         return false;
@@ -312,7 +319,7 @@ namespace SocketCommunicator
                 }
                 else
                 {
-                    memcpy(ps_,buffer_, sizeof(nursing_namespace::PlanningState)+1);
+                    memcpy(ps_,buffer_, sizeof(nursing_namespace::PlanningState));
                     isReceivedCommand=true;
                     //printf("%lf\r\n",ps_->joint_vel_[1]);
                 }
@@ -365,8 +372,8 @@ namespace SocketCommunicator
             {
                 boost::this_thread::interruption_point();
                 write_mutex_.lock();
-                memcpy(write_buffer_,ps_ptr,sizeof(nursing_namespace::PlanningState)+1);
-                write(write_buffer_,sizeof(nursing_namespace::PlanningState)+1);
+                memcpy(write_buffer_,ps_ptr,sizeof(nursing_namespace::PlanningState));
+                write(write_buffer_,sizeof(nursing_namespace::PlanningState));
                 write_mutex_.unlock();
                 boost::this_thread::sleep(boost::posix_time::microseconds((int)1E6/rate));
             }

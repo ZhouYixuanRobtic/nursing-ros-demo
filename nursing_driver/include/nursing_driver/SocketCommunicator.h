@@ -42,10 +42,12 @@ namespace SocketCommunicator
         shared_ptr<boost::thread> clientReadThread_;
         bool isReadRegistered;
         unsigned short portNum_=0x8888;
+        bool receivedBool_{};
 
     public:
         bool isConnectionOk_;
         bool isInitialized;
+
         explicit SocketClient(unsigned short portNum);
         ~SocketClient();
         bool initialize();
@@ -53,7 +55,7 @@ namespace SocketCommunicator
         void clientReadThread(int rate);
         bool read();
         bool write(const void * data, int dataSize);
-
+        bool & receivedBool() {return receivedBool_;};
         void registerClientReadThread(int rate);
         const nursing_namespace::PlanningState& getPlanningState() const { return *ps_;};
         void start();

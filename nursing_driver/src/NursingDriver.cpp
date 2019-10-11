@@ -1,26 +1,25 @@
 #include "NursingDriver.h"
 namespace nursing_driver
 {
-std::string NursingDriver::joint_name_[ARM_DOF]={"shoulder_joint", "bigarm_joint", "elbow_joint",
-                                                 "wrist1_joint", "wrist2_joint", "palm_joint"};
-
-NursingDriver::NursingDriver() : buffer_size_(400),collision_class_(6)
+NursingDriver::NursingDriver() : buffer_size_(400),collision_class_(6),jti_(ARM_DOF,1.0/200),jto_(ARM_DOF)
 {
     socket_client_ = new SocketCommunicator::SocketClient(SERVER_PORT);
     socket_client_->start();
     for(int i=0; i < ARM_DOF;++i)
     {
+        //To Do: The value of MODULE_RATIO needed adjust by the real application.
         if(i < 3)
             joint_ratio_[i]=BIG_MODULE_RATIO;
-        else if(i < 6)
-            joint_ratio_[i]=SMALL_MODULE_RATIO;
         else
-            joint_ratio_[i]=2 * M_PI / 10.05309632;
+            joint_ratio_[i]=SMALL_MODULE_RATIO;
+        jti_.maxVelocity[i] = VMAX *joint_ratio_[i];
+        jti_.maxAcceleration[i] = AMAX*joint_ratio_[i];
+        jti_.maxJerk[i]= JMAX*joint_ratio_[i];
     }
     joint_states_pub_ = nh_.advertise<sensor_msgs::JointState>("joint_states", 300);
     joint_feedback_pub_ = nh_.advertise<control_msgs::FollowJointTrajectoryFeedback>("feedback_states", 100);
     joint_target_pub_ = nh_.advertise<std_msgs::Float32MultiArray>("/nursing_driver/real_pose", 50);
-    cancle_trajectory_pub_ = nh_.advertise<std_msgs::UInt8>("/nursing_driver/cancel_trajectory",100);
+    cancel_trajectory_pub_ = nh_.advertise<std_msgs::UInt8>("/nursing_driver/cancel_trajectory", 100);
 
     /** subscribe topics **/
     trajectory_execution_subs_ = nh_.subscribe("trajectory_execution_event", 10, &NursingDriver::trajectoryExecutionCallback,this);
@@ -37,22 +36,13 @@ void NursingDriver::timerCallback(const ros::TimerEvent &e)
         if(socket_client_->isConnectionOk_)
         {
             ps_=socket_client_->getPlanningState();
-            static bool firstTime=true;
-            if(firstTime)
-            {
-                std::cout<<"DRIVER TIMER"<<ps_.joint_pos_[1]<<std::endl;
-                firstTime=false;
-            }
-
             auto joints = new double[ARM_DOF];
             memcpy(joints,ps_.joint_pos_,ARM_DOF* sizeof(double));
             setCurrentPosition(joints);
             delete[] joints;
         }
         else
-        {
             ROS_ERROR("Can't connect to the robot controller!");
-        }
     }
     else
         setCurrentPosition(target_point_);
@@ -128,15 +118,24 @@ bool NursingDriver::setRobotJointsByMoveIt()
             {
                 std_msgs::UInt8 cancel;
                 cancel.data = 1;
-                cancle_trajectory_pub_.publish(cancel);
-                /*
-                 * to do:
-                 *      first slow down until the velocity to zero, use a while loop
-                 */
-                auto clientContent = new char[150];
-                memcpy(clientContent,&temp_ps,sizeof(nursing_namespace::PlanningState));
-                socket_client_->write(clientContent, sizeof(nursing_namespace::PlanningState));
-                delete[] clientContent;
+                cancel_trajectory_pub_.publish(cancel);
+                memcpy(&jti_.currentPosition[0], temp_ps.joint_pos_, ARM_DOF*sizeof(double));
+                memcpy(&jti_.currentVelocity[0], temp_ps.joint_vel_, ARM_DOF*sizeof(double));
+                memcpy(&jti_.currentAcceleration[0], temp_ps.joint_acc_, ARM_DOF*sizeof(double));
+                memset(&jti_.targetVelocity[0],0,ARM_DOF* sizeof(double));
+                bool update = otgVelocityModeParameterUpdate(jti_);
+                int resultValue = 0;
+                while(resultValue != 1)
+                {
+                    resultValue = otgVelocityModeResult(1,jto_);
+                    auto write_ps=new nursing_namespace::PlanningState;
+                    memcpy(write_ps->joint_pos_,jto_.newPosition.data(),ARM_DOF* sizeof(double));
+                    auto clientContent = new char[150];
+                    memcpy(clientContent,&write_ps,sizeof(nursing_namespace::PlanningState));
+                    socket_client_->write(clientContent, sizeof(nursing_namespace::PlanningState));
+                    delete[] clientContent;
+                    delete write_ps;
+                }
                 start_move_ = false;
                 //clear buffer
                 while(!planning_buf_queue_.empty())
@@ -147,7 +146,6 @@ bool NursingDriver::setRobotJointsByMoveIt()
             }
             else
             {
-                ROS_INFO_ONCE("WRITE DOWN WITH THE FIRST JOINT: %lf",temp_ps.joint_pos_[0]);
                 auto clientContent = new char[150];
                 memcpy(clientContent,&temp_ps,sizeof(nursing_namespace::PlanningState));
                 socket_client_->write(clientContent, sizeof(nursing_namespace::PlanningState));
@@ -165,19 +163,17 @@ bool NursingDriver::setRobotJointsByMoveIt()
 void NursingDriver::MoveItPoseCallback(const trajectory_msgs::JointTrajectoryPoint::ConstPtr &msg)
 {
     auto jointAngle=new double[ARM_DOF];
-    memcpy(jointAngle,&msg->positions[0],sizeof(double)*ARM_DOF);
+    memcpy(jointAngle,msg->positions.data(),sizeof(double)*ARM_DOF);
     if(controller_connected_flag_)
     {
-        ROS_INFO_ONCE("out the compare");
         if(roadPointCompare(jointAngle,last_receive_point_))
         {
-            ROS_INFO_ONCE("inside the compare");
             ROS_DEBUG("Add new waypoint to the buffer.");
             data_count_=0;
             nursing_namespace::PlanningState ps{};
             memcpy(ps.joint_pos_,jointAngle, sizeof(double)*ARM_DOF);
-            memcpy(ps.joint_vel_,&msg->velocities[0],sizeof(double)*ARM_DOF);
-            memcpy(ps.joint_acc_,&msg->accelerations[0],sizeof(double)*ARM_DOF);
+            memcpy(ps.joint_vel_,msg->velocities.data(),sizeof(double)*ARM_DOF);
+            memcpy(ps.joint_acc_,msg->accelerations.data(),sizeof(double)*ARM_DOF);
             planning_buf_queue_.push(ps);
             if(planning_buf_queue_.size()>buffer_size_&&!start_move_)
                 start_move_=true;
@@ -232,8 +228,13 @@ void NursingDriver::run()
         joint_target_pub_.publish(robot_joints);
         ros::param::set("initial_joint_state",joints);
         delete[] joints;
+        ros::param::set("/nursing_driver/robot_connected","1");
     }
-    ros::param::set("/nursing_driver/robot_connected","1");
+    else
+    {
+        ROS_INFO("Didn't connect to robot, did you launch the real robot?");
+        ros::param::set("/nursing_driver/robot_connected","0");
+    }
     timer_ = nh_.createTimer(ros::Duration(1.0 / TIMER_SPAN_RATE_),&NursingDriver::timerCallback,this);
     timer_.start();
 }

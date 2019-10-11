@@ -1,10 +1,8 @@
 #include "SocketCommunicator.h"
 #include "ros/ros.h"
 #include "sensor_msgs/JointState.h"
-#include "NursingDriver.cpp"
-#include "NursingDriver.h"
 nursing_namespace::PlanningState ps{};
-
+#define  ARM_DOF 6
 void joint_states_CB(const sensor_msgs::JointState &msg)
 {
     ROS_INFO_STREAM_ONCE(msg);
@@ -40,10 +38,11 @@ int main(int argc, char * argv[])
     ros::Publisher received_command_pub = nh.advertise<sensor_msgs::JointState>("/receive_command",100);
     ros::AsyncSpinner spinner(1);
     spinner.start();
-    sc.registerServerWriteThread(&ps,60);
-    sc.registerServerReadThread(60);
+    sc.registerServerWriteThread(&ps,50);
+    sc.registerServerReadThread(50);
     nursing_namespace::PlanningState temp_ps{};
     sensor_msgs::JointState jointState{};
+    bool a=true;
     while(ros::ok())
     {
         if(!sc.isInitialized)

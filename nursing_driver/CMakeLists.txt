@@ -24,13 +24,16 @@ else()
     message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++11 support. Please use a different C++ compiler. Suggested solution: update the pkg build-essential ")
 endif()
 
-include_directories(include include/nursing_driver ${catkin_INCLUDE_DIRS})
+include_directories(include include/nursing_driver include/otg ${catkin_INCLUDE_DIRS})
+
+set(OTG_LINK_PATH ${CMAKE_CURRENT_SOURCE_DIR}/lib/)
+link_directories(${catkin_LIBRARY_DIRS}  ${OTG_LINK_PATH})
 
 add_library(SocketCommunicator src/SocketCommunicator.cpp)
 target_link_libraries(SocketCommunicator ${catkin_LIBRARIES})
 
 add_library(NursingDriver src/NursingDriver.cpp)
-target_link_libraries(NursingDriver ${catkin_LIBRARIES} SocketCommunicator)
+target_link_libraries(NursingDriver ${catkin_LIBRARIES} SocketCommunicator otgLib)
 
 add_executable(nursing_driver src/DriverNode.cpp )
 target_link_libraries(nursing_driver ${catkin_LIBRARIES} SocketCommunicator NursingDriver)

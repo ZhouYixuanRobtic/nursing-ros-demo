@@ -16,7 +16,7 @@
 #include "NursingMetaType.h"
 #include "sensor_msgs/JointState.h"
 #include <control_msgs/FollowJointTrajectoryFeedback.h>
-
+#include "otg/otgnewslib.h"
 #define BIG_MODULE_RATIO 2 * M_PI / 60.0 / 121
 #define SMALL_MODULE_RATIO 2 * M_PI / 60.0 / 101
 #define VMAX 3000
@@ -31,6 +31,8 @@ namespace nursing_driver
         const unsigned short SERVER_PORT=0x8888;
         const int TIMER_SPAN_RATE_ =50;
         const double THRESHOLD_ = 0.000001;
+        const std::string joint_name_[ARM_DOF]={"shoulder_joint", "bigarm_joint", "elbow_joint",
+                                                "wrist1_joint", "wrist2_joint", "palm_joint"};
 
         void MoveItPoseCallback(const trajectory_msgs::JointTrajectoryPoint::ConstPtr &msg);
         void trajectoryExecutionCallback(const std_msgs::String::ConstPtr &msg);
@@ -38,7 +40,7 @@ namespace nursing_driver
         bool setRobotJointsByMoveIt();
 
         double last_receive_point_[ARM_DOF]{};
-        bool emergency_stopped_{};
+        bool & emergency_stopped_=socket_client_->receivedBool();
         bool protective_stopped_{};
         bool normal_stopped_{};
         bool data_received_{};
@@ -51,7 +53,7 @@ namespace nursing_driver
 
         SocketCommunicator::SocketClient *socket_client_;
         ros::NodeHandle nh_;
-        ros::Publisher  cancle_trajectory_pub_;
+        ros::Publisher  cancel_trajectory_pub_;
         ros::Timer timer_;
         int collision_class_;
         industrial_msgs::RobotStatus robot_status_;
@@ -66,8 +68,10 @@ namespace nursing_driver
         ros::Subscriber robot_control_subs_;
         std::queue<nursing_namespace::PlanningState>  planning_buf_queue_{};
         nursing_namespace::PlanningState ps_{};
+        JointTrajectoryInput jti_;
+        JointTrajectoryOutput jto_;
     public:
-        const int UPDATE_RATE_ =400;
+        const int UPDATE_RATE =400;
         NursingDriver();
         ~NursingDriver();
         bool roadPointCompare(const double *point1, const double *point2) const;
@@ -78,7 +82,7 @@ namespace nursing_driver
         void updateControlStatus();
         void run();
         bool connectToRobotController();
-        static std::string joint_name_[ARM_DOF];
+
         double joint_ratio_[ARM_DOF]{};
         int buffer_size_;
     };

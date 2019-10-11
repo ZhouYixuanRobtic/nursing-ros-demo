@@ -8,12 +8,13 @@ int main(int argc, char * argv[])
     char *clientContent= new char[150];
     nursing_namespace::PlanningState ps{};
     sc.start();
+    bool & emergency_bool = sc.receivedBool();
     sc.beginListen();
     int i=0;
     while(sc.isConnectionOk_)
     {
         ps=sc.getPlanningState();
-        std::cout<<i<<","<<ps.joint_pos_[0]<<std::endl;
+        std::cout<<"outsid is: "<<emergency_bool<<std::endl;
         usleep(1E6/60);
         if(i<INT_MAX)
             i++;
