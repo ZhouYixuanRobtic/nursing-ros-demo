@@ -17,11 +17,11 @@
   </include>
 
  <!-- industrial_robot_simulator: accepts robot commands and reports status -->
-  <node name="joint_state_publisher" pkg="joint_state_publisher"
-        type="joint_state_publisher">
-      <rosparam param="/source_list">[/aid/joint_states]</rosparam>
-  </node>
+  <node pkg="nursing_controller" type="nursing_robot_simulator" name="nursing_robot_simulator"/>
+  
+  <node pkg="nursing_controller" type="nursing_joint_trajectory_action" name="nursing_joint_trajectory_action"/>
 
+  <node pkg="nursing_driver" type="nursing_driver" name="nursing_driver" launch-prefix="gnome-terminal -e"/>
   <!-- publish the robot state (tf transforms) -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 

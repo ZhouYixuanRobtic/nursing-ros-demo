@@ -28,7 +28,13 @@
 
   <!-- 加载控制器 -->
 	<node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
-                                        output="screen" ns="/$(arg RobotName)" args="joint_state_controller $(arg RobotName)_arm_controller"/>
-
-
+                                        output="screen" ns="/$(arg RobotName)" args="joint_state_controller shoulder_joint_position_controller
+                                                                            bigarm_joint_position_controller
+                                                                            elbow_joint_position_controller
+                                                                            wrist1_joint_position_controller
+                                                                            wrist2_joint_position_controller
+                                                                            palm_joint_position_controller"/>
+  <param name="/robot_name" value="/aid"/>
+  <node pkg="nursing_driver" type="nursing_gazebo_driver" name="nursing_gazebo_driver"/>
+  <node pkg="nursing_driver" type="server" name="nursing_server" launch-prefix="gnome-terminal -e"/>
 </launch>

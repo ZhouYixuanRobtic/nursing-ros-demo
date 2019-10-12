@@ -6,34 +6,32 @@ aid:
 
   # Gazebo use controller that ros_control(joint_position_controller)
   # Position Controllers------------------
-  aid_arm_controller:
-        type: position_controllers/JointTrajectoryController
-        joints:
-            - shoulder_joint
-            - bigarm_joint
-            - elbow_joint
-            - wrist1_joint
-            - wrist2_joint
-            - palm_joint
-        
-        constraints:
-            goal_time: &goal_time_constraint 4.0
-            stopped_velocity_tolerance: 0.05
-            shoulder_Joint:
-                goal: &goal_pos_constraint 0.1
-                trajectory: &trajectory_pos_constraint 0.1
-            bigarm_joint:
-                goal: *goal_pos_constraint
-                trajectory: *trajectory_pos_constraint
-            elbow_Joint:
-                goal: *goal_pos_constraint
-                trajectory: *trajectory_pos_constraint         
-            wrist1_joint:
-                goal: *goal_pos_constraint
-                trajectory: *trajectory_pos_constraint
-            wrist2_joint:
-                goal: *goal_pos_constraint
-                trajectory: *trajectory_pos_constraint
-            palm_joint:
-                goal: *goal_pos_constraint
-                trajectory: *trajectory_pos_constraint  
+  shoulder_joint_position_controller:
+    type: position_controllers/JointPositionController
+    joint: shoulder_joint
+    pid: {p: 0.0,  i: 0.0, d: 0.0, i_clamp: 1}
+
+  bigarm_joint_position_controller:
+    type: position_controllers/JointPositionController
+    joint: bigarm_joint
+    pid: {p: 0.0,  i: 0.00, d: 0.0, i_clamp: 1}
+
+  elbow_joint_position_controller:
+    type: position_controllers/JointPositionController
+    joint: elbow_joint
+    pid: {p: 0.0,  i: 0.0, d: 0.0, i_clamp: 1}
+
+  wrist1_joint_position_controller:
+    type: position_controllers/JointPositionController
+    joint: wrist1_joint
+    pid: {p: 0.0,  i: 0.00, d: 0.0, i_clamp: 1}
+
+  wrist2_joint_position_controller:
+    type: position_controllers/JointPositionController
+    joint: wrist2_joint
+    pid: {p: 0.0,  i: 0.00, d: 0.0, i_clamp: 1}
+
+  palm_joint_position_controller:
+    type: position_controllers/JointPositionController
+    joint: palm_joint
+    pid: {p: 0.0,  i: 0.00, d: 0.0, i_clamp: 1}
