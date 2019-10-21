@@ -128,13 +128,10 @@ bool NursingDriver::setRobotJointsByMoveIt()
                 while(resultValue != 1)
                 {
                     resultValue = otgVelocityModeResult(1,jto_);
-                    auto write_ps=new nursing_namespace::PlanningState;
-                    memcpy(write_ps->joint_pos_,jto_.newPosition.data(),ARM_DOF* sizeof(double));
                     auto clientContent = new char[150];
-                    memcpy(clientContent,&write_ps,sizeof(nursing_namespace::PlanningState));
-                    socket_client_->write(clientContent, sizeof(nursing_namespace::PlanningState));
+                    memcpy(clientContent,jto_.newPosition.data(),sizeof(double)*ARM_DOF);
+                    socket_client_->write(clientContent, sizeof(double)*ARM_DOF);
                     delete[] clientContent;
-                    delete write_ps;
                 }
                 start_move_ = false;
                 //clear buffer
@@ -147,8 +144,8 @@ bool NursingDriver::setRobotJointsByMoveIt()
             else
             {
                 auto clientContent = new char[150];
-                memcpy(clientContent,&temp_ps,sizeof(nursing_namespace::PlanningState));
-                socket_client_->write(clientContent, sizeof(nursing_namespace::PlanningState));
+                memcpy(clientContent,temp_ps.joint_pos_,sizeof(double)*ARM_DOF);
+                socket_client_->write(clientContent, sizeof(double)*ARM_DOF);
                 delete[] clientContent;
             }
         }

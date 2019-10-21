@@ -1,3 +1,4 @@
+#include <sensor_msgs/JointState.h>
 #include "SocketCommunicator.h"
 namespace SocketCommunicator
 {
@@ -327,7 +328,10 @@ namespace SocketCommunicator
                 }
                 else
                 {
-                    memcpy(ps_,buffer_, sizeof(nursing_namespace::PlanningState));
+                    for(int i=0; i<receivedBytes_;i+=sizeof(double)*6)
+                    {
+                        memcpy(ps_->joint_pos_,&buffer_[i], sizeof(double)*6);
+                    }
                     isReceivedCommand=true;
                     //printf("%lf\r\n",ps_->joint_vel_[1]);
                 }
@@ -360,7 +364,7 @@ namespace SocketCommunicator
         catch (boost::thread_interrupted&e )
         {
             std::cout<<"client thread interrupted!"<<std::endl;
-            read_mutex_.unlock();
+            //read_mutex_.unlock();
         }
     }
     void SocketServer::registerServerReadThread(int rate)
