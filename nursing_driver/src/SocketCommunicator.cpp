@@ -15,7 +15,10 @@ namespace SocketCommunicator
     SocketClient::~SocketClient()
     {
         if(isReadRegistered)
+        {
             clientReadThread_->interrupt();
+            clientReadThread_->join();
+        }
         close(clientFd_);
         delete ps_;
     }
@@ -132,7 +135,6 @@ namespace SocketCommunicator
     void SocketClient::registerClientReadThread(int rate)
     {
         clientReadThread_.reset(new boost::thread(boost::bind(&SocketClient::clientReadThread, this, rate)));
-        clientReadThread_->detach();
         isReadRegistered=true;
     }
     void SocketClient::start()
@@ -167,9 +169,15 @@ namespace SocketCommunicator
     SocketServer::~SocketServer()
     {
         if(isReadRegistered)
+        {
             ServerReadThread_->interrupt();
+            ServerReadThread_->join();
+        }
         if(isWriteRegistered)
+        {
             ServerWriteThread_->interrupt();
+            ServerWriteThread_->join();
+        }
         close(newFd_);
         delete [] buffer_;
         delete[] write_buffer_;
@@ -358,7 +366,6 @@ namespace SocketCommunicator
     void SocketServer::registerServerReadThread(int rate)
     {
         ServerReadThread_.reset(new boost::thread(boost::bind(&SocketServer::serverReadThread,this,rate)));
-        ServerReadThread_->detach();
         isReadRegistered=true;
     }
     void SocketServer::serverWriteThread(nursing_namespace::PlanningState *ps_ptr,int rate)
@@ -387,7 +394,6 @@ namespace SocketCommunicator
     void SocketServer::registerServerWriteThread(nursing_namespace::PlanningState *ps_ptr, int rate)
     {
         ServerWriteThread_.reset(new boost::thread(boost::bind(&SocketServer::serverWriteThread,this,ps_ptr,rate)));
-        ServerWriteThread_->detach();
         isWriteRegistered=true;
     }
 }
