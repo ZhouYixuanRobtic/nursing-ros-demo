@@ -5,8 +5,7 @@ nursing_namespace::PlanningState ps{};
 #define  ARM_DOF 6
 void joint_states_CB(const sensor_msgs::JointState &msg)
 {
-    ROS_INFO_STREAM_ONCE(msg);
-    boost::mutex callback_mutex;
+    //boost::mutex callback_mutex;
     auto joints= new double[ARM_DOF];
     joints[0]=msg.position[3];
     joints[1]=msg.position[0];
@@ -15,18 +14,18 @@ void joint_states_CB(const sensor_msgs::JointState &msg)
     joints[4]=msg.position[5];
     joints[5]=msg.position[2];
     //memcpy(ps.joint_pos_,msg.position.data(),sizeof(ps.joint_pos_));
-    callback_mutex.lock();
+    //callback_mutex.lock();
     memcpy(ps.joint_pos_,joints,sizeof(ps.joint_pos_));
     memcpy(ps.joint_vel_,msg.velocity.data(),sizeof(ps.joint_vel_));
     memcpy(ps.joint_acc_,msg.effort.data(),sizeof(ps.joint_acc_));
-    callback_mutex.unlock();
+    //callback_mutex.unlock();
     delete [] joints;
 }
 int main(int argc, char * argv[])
 {
     ros::init(argc,argv,"server");
     ros::NodeHandle nh;
-    ros::Rate loop_rate(60);
+    ros::Rate loop_rate(400);
 
     const unsigned short port_num=0x8888;
     SocketCommunicator::SocketServer sc(port_num);
@@ -38,8 +37,9 @@ int main(int argc, char * argv[])
     ros::Publisher received_command_pub = nh.advertise<sensor_msgs::JointState>("/receive_command",100);
     ros::AsyncSpinner spinner(1);
     spinner.start();
-    sc.registerServerWriteThread(&ps,50);
     sc.registerServerReadThread(50);
+    sc.registerServerWriteThread(&ps,50);
+
     nursing_namespace::PlanningState temp_ps{};
     sensor_msgs::JointState jointState{};
     bool a=true;
@@ -58,10 +58,11 @@ int main(int argc, char * argv[])
 
             jointState.header.stamp=ros::Time::now();
             jointState.position.resize(ARM_DOF);
+            jointState.header.seq++;
             for(int i=0;i<ARM_DOF;++i)
                 jointState.position[i]=temp_ps.joint_pos_[i];
-            ROS_INFO_STREAM_ONCE(jointState);
             received_command_pub.publish(jointState);
+            sc.isReceivedCommand=false;
         }
         loop_rate.sleep();
     }

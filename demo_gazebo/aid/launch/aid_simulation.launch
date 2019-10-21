@@ -35,6 +35,6 @@
                                                                             wrist2_joint_position_controller
                                                                             palm_joint_position_controller"/>
   <param name="/robot_name" value="/aid"/>
-  <node pkg="nursing_driver" type="nursing_gazebo_driver" name="nursing_gazebo_driver" launch-prefix="gnome-terminal -e"/>
+  <node pkg="nursing_driver" type="nursing_gazebo_driver" name="nursing_gazebo_driver"/>
   <node pkg="nursing_driver" type="server" name="nursing_server"/>
 </launch>
