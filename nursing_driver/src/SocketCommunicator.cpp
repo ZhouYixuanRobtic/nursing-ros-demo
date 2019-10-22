@@ -2,7 +2,7 @@
 #include "SocketCommunicator.h"
 namespace SocketCommunicator
 {
-    SocketClient::SocketClient(unsigned short portNum)
+    SocketClient::SocketClient(unsigned short portNum, std::string server_address):SERVER_ADDRESS_(server_address)
     {
         this->portNum_=portNum;
         this->isConnectionOk_=false;
@@ -39,7 +39,7 @@ namespace SocketCommunicator
         /* 网络字节顺序，短整型 */
         clientAddr_.sin_port = htons(portNum_);    //9054
         /* 将运行程序机器的IP填充入s_addr */
-        clientAddr_.sin_addr.s_addr = htonl(INADDR_ANY);  //  INADDR_ANY  0.0.0.0 monitor all
+        clientAddr_.sin_addr.s_addr = inet_addr(SERVER_ADDRESS_.c_str());  //  INADDR_ANY  0.0.0.0 monitor all
         isInitialized=true;
         return true;
     }
@@ -161,7 +161,6 @@ namespace SocketCommunicator
         this->isConnectionOk=false;
         this->isReadRegistered=false;
         this->isInitialized=false;
-        this->isReceivedCommand=false;
         buffer_=new char[_BUFFER_SIZE_];
         write_buffer_=new char[_BUFFER_SIZE_];
         ps_=new nursing_namespace::PlanningState;
@@ -318,8 +317,6 @@ namespace SocketCommunicator
                         printf("received empty\r\n");
                         first_time=false;
                     }
-                    if(isReceivedCommand)
-                        isReceivedCommand=false;
                     //isConnectionOk=false;
                     //isInitialized=false;
                     //FD_CLR(newFd_, &serverNew_set);
@@ -331,9 +328,8 @@ namespace SocketCommunicator
                     for(int i=0; i<receivedBytes_;i+=sizeof(double)*6)
                     {
                         memcpy(ps_->joint_pos_,&buffer_[i], sizeof(double)*6);
+                        planning_state_buffer_.push(*ps_);
                     }
-                    isReceivedCommand=true;
-                    //printf("%lf\r\n",ps_->joint_vel_[1]);
                 }
             }
             return true;
@@ -399,5 +395,14 @@ namespace SocketCommunicator
     {
         ServerWriteThread_.reset(new boost::thread(boost::bind(&SocketServer::serverWriteThread,this,ps_ptr,rate)));
         isWriteRegistered=true;
+    }
+    const nursing_namespace::PlanningState & SocketServer::getPlanningState()
+    {
+        if(!planning_state_buffer_.empty())
+        {
+            memcpy(ps_,&planning_state_buffer_.front(), sizeof(nursing_namespace::PlanningState));
+            planning_state_buffer_.pop();
+        }
+        return *ps_;
     }
 }
