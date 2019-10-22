@@ -9,7 +9,7 @@
   <!-- the "sim" argument controls whether we connect to a Simulated or Real robot -->
   <!--  - if sim=false, a robot_ip argument is required -->
   <arg name="sim" default="true" />
-  <arg name="robot_ip"/>
+  <arg name="robot_ip" default="0.0.0.0"/>
  
   <!-- load the robot_description parameter before launching ROS-I nodes -->
   <include file="$(find aid_moveit_config)/launch/planning_context.launch" >
@@ -21,7 +21,9 @@
   
   <node pkg="nursing_controller" type="nursing_joint_trajectory_action" name="nursing_joint_trajectory_action"/>
 
-  <node pkg="nursing_driver" type="nursing_driver" name="nursing_driver" launch-prefix="gnome-terminal -e"/>
+  <node pkg="nursing_driver" type="nursing_driver" name="nursing_driver" required="true">
+    <param name="/server_host" type="str" value="$(arg robot_ip)"/>
+  </node>
   <!-- publish the robot state (tf transforms) -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
 

@@ -20,6 +20,7 @@
 #include <boost/thread/thread.hpp>
 #include "NursingMetaType.h"
 #include "tr1/memory"
+#include "queue"
 #define _BUFFER_SIZE_ 1024
 namespace SocketCommunicator
 {
@@ -29,7 +30,7 @@ namespace SocketCommunicator
 
         const int _BACKLOG_ =12;
         nursing_namespace::PlanningState *ps_;
-
+        const std::string SERVER_ADDRESS_;
         struct sockaddr_in clientAddr_{};
         int clientFd_{};
 
@@ -48,7 +49,7 @@ namespace SocketCommunicator
         bool isConnectionOk_;
         bool isInitialized;
 
-        explicit SocketClient(unsigned short portNum);
+        explicit SocketClient(unsigned short portNum,std::string server_address);
         ~SocketClient();
         bool initialize();
         bool waitForConnection();
@@ -80,6 +81,7 @@ namespace SocketCommunicator
         char * write_buffer_;
         boost::mutex read_mutex_{},write_mutex_{};
 
+        std::queue<nursing_namespace::PlanningState> planning_state_buffer_;
         nursing_namespace::PlanningState * ps_;
 
         bool isReadRegistered,isWriteRegistered;
@@ -90,7 +92,6 @@ namespace SocketCommunicator
     public:
         bool isConnectionOk;
         bool isInitialized;
-        bool isReceivedCommand;
         explicit SocketServer(unsigned short portNum);
         ~SocketServer();
         bool initialize();
@@ -102,7 +103,7 @@ namespace SocketCommunicator
         void registerServerReadThread(int rate);
         void registerServerWriteThread(nursing_namespace::PlanningState * ps_ptr,int rate);
         void closeServer();
-        const nursing_namespace::PlanningState& getPlanningState() const { return *ps_;};
+        const nursing_namespace::PlanningState& getPlanningState();
     };
 }
 

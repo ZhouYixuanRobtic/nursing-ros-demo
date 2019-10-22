@@ -6,7 +6,7 @@ int main(int argc, char * argv[])
     ros::init(argc,argv,"client");
     ros::NodeHandle nh;
     const unsigned short port_num=0x8888;
-    SocketCommunicator::SocketClient sc(port_num);
+    SocketCommunicator::SocketClient sc(port_num,"0.0.0.0");
     char *clientContent= new char[150];
     nursing_namespace::PlanningState ps{};
     sc.start();

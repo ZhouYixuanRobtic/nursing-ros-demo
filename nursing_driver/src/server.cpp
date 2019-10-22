@@ -5,7 +5,7 @@ nursing_namespace::PlanningState ps{};
 #define  ARM_DOF 6
 void joint_states_CB(const sensor_msgs::JointState &msg)
 {
-    //boost::mutex callback_mutex;
+    boost::mutex callback_mutex;
     auto joints= new double[ARM_DOF];
     joints[0]=msg.position[3];
     joints[1]=msg.position[0];
@@ -13,12 +13,11 @@ void joint_states_CB(const sensor_msgs::JointState &msg)
     joints[3]=msg.position[4];
     joints[4]=msg.position[5];
     joints[5]=msg.position[2];
-    //memcpy(ps.joint_pos_,msg.position.data(),sizeof(ps.joint_pos_));
-    //callback_mutex.lock();
+    callback_mutex.lock();
     memcpy(ps.joint_pos_,joints,sizeof(ps.joint_pos_));
     memcpy(ps.joint_vel_,msg.velocity.data(),sizeof(ps.joint_vel_));
     memcpy(ps.joint_acc_,msg.effort.data(),sizeof(ps.joint_acc_));
-    //callback_mutex.unlock();
+    callback_mutex.unlock();
     delete [] joints;
 }
 int main(int argc, char * argv[])
@@ -52,18 +51,14 @@ int main(int argc, char * argv[])
         }
         if(!sc.isConnectionOk)
             sc.waitForConnection();
-        else if(sc.isReceivedCommand)
-        {
-            temp_ps=sc.getPlanningState();
 
-            jointState.header.stamp=ros::Time::now();
-            jointState.position.resize(ARM_DOF);
-            jointState.header.seq++;
-            for(int i=0;i<ARM_DOF;++i)
-                jointState.position[i]=temp_ps.joint_pos_[i];
-            received_command_pub.publish(jointState);
-            sc.isReceivedCommand=false;
-        }
+        temp_ps=sc.getPlanningState();
+        jointState.header.stamp=ros::Time::now();
+        jointState.position.resize(ARM_DOF);
+        jointState.header.seq++;
+        for(int i=0;i<ARM_DOF;++i)
+            jointState.position[i]=temp_ps.joint_pos_[i];
+        received_command_pub.publish(jointState);
         loop_rate.sleep();
     }
     ros::waitForShutdown();
