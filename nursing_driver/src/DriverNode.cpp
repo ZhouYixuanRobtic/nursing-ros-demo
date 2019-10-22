@@ -13,7 +13,6 @@ int main(int argc, char *argv[])
 
     ros::AsyncSpinner spinner(2);
     spinner.start();
-    param:
     ros::Rate loop_rate(robot_driver.UPDATE_RATE);
     while(ros::ok())
     {

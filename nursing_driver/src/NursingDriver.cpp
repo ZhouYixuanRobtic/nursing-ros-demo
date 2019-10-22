@@ -3,7 +3,9 @@ namespace nursing_driver
 {
 NursingDriver::NursingDriver() : buffer_size_(400),collision_class_(6),jti_(ARM_DOF,1.0/200),jto_(ARM_DOF)
 {
-    socket_client_ = new SocketCommunicator::SocketClient(SERVER_PORT);
+    std::string server_host;
+    ros::param::get("/nursing_driver/server_host", server_host);
+    socket_client_ = new SocketCommunicator::SocketClient(SERVER_PORT,server_host);
     socket_client_->start();
     for(int i=0; i < ARM_DOF;++i)
     {
