@@ -2,7 +2,7 @@
 <launch>
   <!-- The planning and execution components of MoveIt! configured to run -->
   <!-- using the ROS-Industrial interface. -->
-  <arg name="load_robot_description" default="false"/>
+  <arg name="load_robot_description" default="true"/>
  
   <rosparam command="load" file="$(find aid_moveit_config)/config/joint_names.yaml"/>
 
@@ -21,7 +21,7 @@
   
   <node pkg="nursing_controller" type="nursing_joint_trajectory_action" name="nursing_joint_trajectory_action"/>
 
-  <node pkg="nursing_driver" type="nursing_driver" name="nursing_driver" required="true">
+  <node pkg="nursing_driver" type="nursing_driver" name="nursing_driver">
     <param name="/server_host" type="str" value="$(arg robot_ip)"/>
   </node>
   <!-- publish the robot state (tf transforms) -->

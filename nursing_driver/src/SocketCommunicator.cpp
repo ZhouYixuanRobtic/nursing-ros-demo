@@ -325,11 +325,14 @@ namespace SocketCommunicator
                 }
                 else
                 {
-                    for(int i=0; i<receivedBytes_;i+=sizeof(double)*6)
-                    {
-                        memcpy(ps_->joint_pos_,&buffer_[i], sizeof(double)*6);
-                        planning_state_buffer_.push(*ps_);
-                    }
+                   if(receivedBytes_> 6*sizeof(double)-1)
+                   {
+                       for(int i=0; i<receivedBytes_;i+=sizeof(double)*6)
+                       {
+                           memcpy(ps_->joint_pos_,&buffer_[i], sizeof(double)*6);
+                           planning_state_buffer_.push(*ps_);
+                       }
+                   }
                 }
             }
             return true;
